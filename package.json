@@ -1,0 +1,32 @@
+{
+  "name": "tasker-app",
+  "version": "1.0.0",
+  "description": "A clean and intuitive web-based task management application built with vanilla JavaScript",
+  "main": "to_do_app.js",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx live-server ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mustafa-sarwari/Tasker.git"
+  },
+  "keywords": [
+    "todo",
+    "task-manager",
+    "productivity",
+    "vanilla-javascript",
+    "localstorage",
+    "frontend",
+    "web-app",
+    "to-do-list",
+    "task-management",
+    "javascript"
+  ],
+  "author": "Mustafa Sarwari <mustafa.sarwari@example.com> (https://github.com/mustafa-sarwari)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mustafa-sarwari/Tasker/issues"
+  },
+  "homepage": "https://mustafa-sarwari.github.io/Tasker/"
+}
