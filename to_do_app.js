@@ -39,36 +39,46 @@ try {
 }
 
 /**
+ * Create a remove button with event handler for a task
+ * @param {HTMLElement} taskElement - The list item element to remove
+ * @param {string} taskText - The text content of the task
+ * @returns {HTMLElement} The configured remove button
+ */
+function createRemoveButton(taskElement, taskText) {
+  const removeBtn = document.createElement("button");
+  removeBtn.classList.add("remove_btn");
+  removeBtn.textContent = "Remove";
+  removeBtn.setAttribute("aria-label", `Remove task: ${taskText}`);
+  
+  removeBtn.addEventListener("click", () => {
+    if (confirm("Are you sure you want to remove this task?")) {
+      ul.removeChild(taskElement);
+      
+      // Update localStorage
+      const index = saveTask.indexOf(taskText);
+      if (index > -1) {
+        saveTask.splice(index, 1);
+        localStorage.setItem("task", JSON.stringify(saveTask));
+      }
+    }
+  });
+  
+  return removeBtn;
+}
+
+/**
  * Render saved tasks on page load
  * Creates list items with remove buttons for each saved task
  */
 saveTask.forEach(sT => {
-  // Create list item and remove button
+  // Create list item
   const newLi = document.createElement("li");
-  const rBtn = document.createElement("button");
-  
   ul.appendChild(newLi);
   newLi.textContent = sT;
   
+  // Add remove button with confirmation
+  const rBtn = createRemoveButton(newLi, sT);
   newLi.appendChild(rBtn);
-  rBtn.classList.add("remove_btn");
-  rBtn.textContent = "Remove";
-  rBtn.setAttribute("aria-label", `Remove task: ${sT}`);
-
-  /**
-   * Handle task removal
-   * Removes from DOM and updates localStorage
-   */
-  rBtn.addEventListener("click", () => {
-    ul.removeChild(newLi);
-    
-    // Update localStorage after removing task
-    const index = saveTask.indexOf(sT);
-    if (index > -1) {
-      saveTask.splice(index, 1);
-      localStorage.setItem("task", JSON.stringify(saveTask));
-    }
-  });
 }); 
 
 /**
@@ -98,29 +108,9 @@ function addTask(event) {
   task.value = "";
   task.style.height = "auto";
 
-  // Create remove button
-  const removeTask = document.createElement("button");
-  removeTask.classList.add("remove_btn");
-  removeTask.textContent = "Remove";
-  removeTask.setAttribute("aria-label", `Remove task: ${taskText}`);
+  // Add remove button with confirmation
+  const removeTask = createRemoveButton(newLi, taskText);
   newLi.appendChild(removeTask);
-  
-  /**
-   * Handle task removal with confirmation
-   * Removes from DOM and updates localStorage
-   */
-  removeTask.addEventListener("click", () => {
-    if (confirm("Are you sure you want to remove this task?")) {
-      ul.removeChild(newLi);
-
-      // Update localStorage
-      const index = saveTask.indexOf(taskText);
-      if (index > -1) {
-        saveTask.splice(index, 1);
-        localStorage.setItem("task", JSON.stringify(saveTask));
-      }
-    }
-  });
 }
 
 // Add task on button click
